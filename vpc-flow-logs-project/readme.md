@@ -8,5 +8,12 @@ For the original project and instructions created by Adrian Cantrill, please vis
 
 # Project Steps
 
-## Step 1: Create IAM role
+## Step 1: IAM roles
 
+First, we must configure the EC2 SSM Session Manager role.
+
+Navigate to Identity and Access Management (IAM) in the AWS Management Console.
+
+![iam role](images/iamrole.png)
+
+![create role](images/createrole.png)
