@@ -18,9 +18,9 @@ Click on Roles on the navigation panel on the left.
 
 Create the role, choosing AWS service for the trusted entity type and EC2 as the use case.
 
-![create role](images/createrole.png)
+![create role](images/createroleclick.png)
 
-![iam role](images/iamrole.png)
+![iam role](images/iamec2.png)
 
 Next, for the permissions choose the AWS managed policy called "AmazonSSMManagedInstanceCore."
 
@@ -34,7 +34,7 @@ The second role we must create is for the VPC Flow Logs.
 
 Again, navigate to Roles and click "Create role."
 
-![create role](images/createrole.png)
+![create role](images/createroleclick.png)
 
 For trusted entity type, select "Custom trust policy" and paste the policy below.
 
@@ -66,5 +66,3 @@ On the next page for the Role name, you can call it Flow-Logs-Role. Then click "
 ![cw role](images/cwrolename.png)
 
 ## Step 2: EC2 Instances
-
-
