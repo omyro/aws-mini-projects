@@ -2,9 +2,9 @@
 
 This project involves using VPC flow logs to resolve a connectivity issue between 2 EC2 instances.
 
-This project was completed in the us-east-1 region, however it can be completed in any other AWS region.
+I completed this project in the us-east-1 region, however you can use any other AWS region.
 
-For the original project and instructions created by Adrian Cantrill, please visit: https://github.com/acantril/learn-cantrill-io-labs/tree/master/00-aws-simple-demos/aws-vpc-flow-logs
+For the original project and instructions created by Adrian Cantrill, please visit: [Cantrill Labs](https://github.com/acantril/learn-cantrill-io-labs/tree/master/00-aws-simple-demos/aws-vpc-flow-logs)
 
 # Project Steps
 
@@ -12,8 +12,59 @@ For the original project and instructions created by Adrian Cantrill, please vis
 
 First, we must configure the EC2 SSM Session Manager role.
 
-Navigate to Identity and Access Management (IAM) in the AWS Management Console.
+Navigate to Identity and Access Management (IAM) in the AWS Management Console. 
+
+Click on Roles on the navigation panel on the left. 
+
+Create the role, choosing AWS service for the trusted entity type and EC2 as the use case.
+
+![create role](images/createrole.png)
 
 ![iam role](images/iamrole.png)
 
+Next, for the permissions choose the AWS managed policy called "AmazonSSMManagedInstanceCore."
+
+![ssm role](images/ssmrole.png)
+
+For Role name, you can call it EC2-SSM-Role. Then click "Create role."
+
+![role name](images/ssmrolename.png)
+
+The second role we must create is for the VPC Flow Logs. 
+
+Again, navigate to Roles and click "Create role."
+
 ![create role](images/createrole.png)
+
+For trusted entity type, select "Custom trust policy" and paste the policy below.
+
+![custom trust](images/customtrust.png)
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "vpc-flow-logs.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+On the next page for the permissions, choose the "CloudWatchLogsFullAccess" AWS managed policy.
+
+![cw role](images/cwrole.png)
+
+In reality, you would follow the principle of least privilege, providing access only to the specific log group and allowing only the required actions.
+
+On the next page for the Role name, you can call it Flow-Logs-Role. Then click "Create role."
+
+![cw role](images/cwrolename.png)
+
+## Step 2: EC2 Instances
+
+
