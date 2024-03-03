@@ -81,5 +81,16 @@ You can name the instance "flow-logs-project" and choose the Amazon Linux 2 AMI.
 
 For the instance type, you can leave it as t2.micro. For the key pair, select "Proceed without a key pair."
 
-![ec2 name](images/instancetype.png)
+![ec2 type](images/instancetype.png)
 
+For the Network settings, keep the default VPC. Under Firewall, keep “Create security group” selected and uncheck “Allow SSH traffic from.” (Don't select any inbound rules. This is intentional as you will see later.)
+
+![ec2 network](images/networksetting.png)
+
+Under Advanced details, for the IAM instance profile choose the EC2-SSM-Role you created in Step 1.
+
+![ec2 ssm](images/selectssm.png)
+
+Keep all other default settings. Under the Summary section, enter 2 for the number of instances to launch and click "Launch instance" on the bottom right.
+
+![ec2 summary](images/ec2summary.png)
