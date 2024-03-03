@@ -93,4 +93,4 @@ Under Advanced details, for the IAM instance profile choose the EC2-SSM-Role you
 
 Keep all other default settings. Under the Summary section, enter 2 for the number of instances to launch and click "Launch instance" on the bottom right.
 
-![ec2 summary](images/ec2summary.png)
+![ec2 summary](images/ec2summarylaunch.png)
