@@ -1,5 +1,7 @@
 # Project #1: VPC Flow Logs
 
+![image0](images/flowlogsproject.png)
+
 This project involves using VPC flow logs to resolve a connectivity issue between 2 EC2 instances.
 
 I completed this project in the us-east-1 region, however you can use any other AWS region.
@@ -66,3 +68,18 @@ On the next page for the Role name, you can call it Flow-Logs-Role. Then click "
 ![cw role](images/cwrolename.png)
 
 ## Step 2: EC2 Instances
+
+Navigate to the EC2 Dashboard and click on Instances on the navigation panel on the left.
+
+Click "Launch instances" on the top right.
+
+![ec2 launch](images/ec2launch.png)
+
+You can name the instance "flow-logs-project" and choose the Amazon Linux 2 AMI.
+
+![ec2 name](images/nameami.png)
+
+For the instance type, you can leave it as t2.micro. For the key pair, select "Proceed without a key pair."
+
+![ec2 name](images/instancetype.png)
+
