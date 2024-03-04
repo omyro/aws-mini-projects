@@ -61,7 +61,7 @@ On the next page for the permissions, choose the "CloudWatchLogsFullAccess" AWS 
 
 ![cw role](images/cwrole.png)
 
-In reality, you would follow the principle of least privilege, providing access only to the specific log group and allowing only the required actions.
+In reality, we would follow the principle of least privilege, providing access only to the specific log group and allowing only the required actions.
 
 On the next page for the Role name, you can call it Flow-Logs-Role. Then click "Create role."
 
@@ -94,3 +94,31 @@ Under Advanced details, for the IAM instance profile choose the EC2-SSM-Role you
 Keep all other default settings. Under the Summary section, enter 2 for the number of instances to launch and click "Launch instance" on the bottom right.
 
 ![ec2 summary](images/ec2summarylaunch.png)
+
+You should now see Success at the top of the page in a green box. Click Instances at the top to see the two instances.
+
+![ec2 success](images/ec2success.png)
+
+## Step 3: Connect to EC2 Instances
+
+Wait until the instances pass both health checks. Then, select the first instance and click Connect.
+
+![ec2 checks](images/ec2checks.png)
+
+![ec2 connect1](images/ec2connect1.png)
+
+Under the Session Manager tab click Connect.
+
+![ssm connect](images/ssmconnect.png)
+
+This opens a shell to the instance. Now, open a new tab in your browser and navigate to EC2 in the AWS Management Console. Click on Instances on the navigation panel on the left, select the second instance, and click Connect. (We can check the instance ID to make sure we're not connecting to the first instance again.)
+
+![ssm connect2](images/ssmconnect2.png)
+
+We can run the command `ip a` on both instance shells. The IP on interface `eth0` is the private IP of the instance, which we can also see in the console.
+
+From the shell of the first instance, we will try to ping the second instance using the command `ping <ip address> -c 3 -W 1`. Replace <ip address> with the private IP of the second instance.
+
+We are telling ping to exit after sending 3 ping packets (`-c 3`), compared to the default of pinging endlessly until we exit by using Ctrl C. We are telling ping to wait 1 second (`-W 1`). If it doesn't hear a response after 1 second, the packet is timed out.
+
+
