@@ -115,10 +115,50 @@ This opens a shell to the instance. Now, open a new tab in your browser and navi
 
 ![ssm connect2](images/ssmconnect2.png)
 
+## Step 4: Pinging the second instance
+
 We can run the command `ip a` on both instance shells. The IP on interface `eth0` is the private IP of the instance, which we can also see in the console.
+
+![ip1](images/ip1.png)
+
+![ipconsole1](images/ipconsole1.png)
+
+![ip2](images/ip2.png)
+
+![ipconsole2](images/ipconsole2.png)
 
 From the shell of the first instance, we will try to ping the second instance using the command `ping <ip address> -c 3 -W 1`. Replace `<ip address>` with the private IP of the second instance.
 
 We are telling ping to exit after sending 3 ping packets (`-c 3`), compared to the default of pinging endlessly until we exit by using Ctrl C. We are telling ping to wait 1 second (`-W 1`). If it doesn't hear a response after 1 second, the packet is timed out.
 
+![ping1](images/ping1.png)
 
+The ping statistics show that 3 packets were sent, 0 packets received, and 100% packet loss, indicating that the second instance did not respond.
+
+We can ping Google's DNS servers (IP 8.8.8.8), which we know are working, to rule out an issue with the first instance that is performing the ping.
+
+![ping2](images/ping2.png)
+
+This shows 3 packets sent, 3 received, and 0% packet loss, which indicates the outbound ping is working. We need to figure out where the ping packet is being lost or blocked when we ping the second instance.
+
+This issue will be easier to diagnose because the instances are in the same subnet, and hence the same AZ. It would be more challenging if they were in different networks or data centers with more routers and firewalls between them.
+
+## Step 5: Create CloudWatch log group
+
+Nagivate to CloudWatch in the AWS Management Console.
+
+On the navigation panel on the left, under Logs, click on Log groups. Click "Create log group" on the top right.
+
+![logcreate](images/logcreate.png)
+
+![loggroup](images/loggroup.png)
+
+## Step 6: Create VPC flow log
+
+Navigate to VPC in the AWS Management Console.
+
+On the panel on the left, click "Your VPCs" and select the default VPC in which you launched the two EC2 instances. At the bottom, head to the "Flow logs" tab and click the orange "Create flow log" button.
+
+![yourvpc](images/yourvpc.png)
+
+![flowlog](images/flowlog.png)
