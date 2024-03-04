@@ -117,7 +117,7 @@ This opens a shell to the instance. Now, open a new tab in your browser and navi
 
 We can run the command `ip a` on both instance shells. The IP on interface `eth0` is the private IP of the instance, which we can also see in the console.
 
-From the shell of the first instance, we will try to ping the second instance using the command `ping <ip address> -c 3 -W 1`. Replace <ip address> with the private IP of the second instance.
+From the shell of the first instance, we will try to ping the second instance using the command `ping <ip address> -c 3 -W 1`. Replace `<ip address>` with the private IP of the second instance.
 
 We are telling ping to exit after sending 3 ping packets (`-c 3`), compared to the default of pinging endlessly until we exit by using Ctrl C. We are telling ping to wait 1 second (`-W 1`). If it doesn't hear a response after 1 second, the packet is timed out.
 
