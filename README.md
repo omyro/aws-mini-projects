@@ -4,4 +4,4 @@ This is a compilation of AWS Mini Projects I have completed. All the projects we
 
 Project #1: [VPC Flow Logs](https://github.com/omyro/aws-mini-projects/tree/main/vpc-flow-logs-project)
 
-![image0](images/flowlogsproject.png)
+![image0](vpc-flow-logs-project/images/flowlogsproject.png)
