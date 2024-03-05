@@ -162,3 +162,16 @@ On the panel on the left, click "Your VPCs" and select the default VPC in which 
 ![yourvpc](images/yourvpc.png)
 
 ![flowlog](images/flowlog.png)
+
+We can name our flow log "flow-log-project" and set the Maximum aggregation interval to 1 minute. 
+
+For Destination, keep "Send to CloudWatch Logs" and under Destination log group choose the CloudWatch log group we created in Step 5, called vpc-flow-logs-project.
+
+Then choose the flow log IAM role we created in Step 1, called Flow-Logs-Role. Keep everything else default. Click on "Create flow log" on the bottom right.
+
+![createflowlog](images/createflowlog.png)
+
+![createflowlog2](images/createflowlog2.png)
+
+![createflowlog3](images/createflowlog3.png)
+
