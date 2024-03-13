@@ -175,3 +175,44 @@ Then choose the flow log IAM role we created in Step 1, called Flow-Logs-Role. K
 
 ![createflowlog3](images/createflowlog3.png)
 
+Now return to the Session Manager console with the shell to our first instance. We need to try connecting to the second instance again. Run the `ping <ip address> -c 3 -W 1` command again with the private IP of the second instance.
+
+![pingagain](images/pingagain.png)
+
+Again, it should show 100% packet loss under the ping statistics.
+
+Next, we will obtain the ENI ID of the first instance with the following command: `TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/network/interfaces/macs/"$(TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/mac)"/interface-id`. This uses the Instance Metadata Service (IMDSv2). Visit the following [Amazon EC2 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) for an explanation of IMDSv2 vs. IMDSv1.
+
+Most likely, your instance requires you to use IMDSv2 instead of IMDSv1. The place you can check that is in the EC2 console, under Instances. If you select the first instance and scroll down a bit under the "Details" tab, you will see "IMDSv2" and underneath it will say either Required or Optional. If Required, you must use IMDSv2, as I have in the example above. If it says Optional, you can use IMDSv1.
+
+![imds-details](images/imdsdetails.png)
+
+(Please note, if you are following [Cantrill's original instructions](https://github.com/acantril/learn-cantrill-io-labs/tree/master/00-aws-simple-demos/aws-vpc-flow-logs) for this project, he uses IMDSv1 and it most likely won't work for you. I had to figure this out and put together the command above for you to easily get the ENI ID from the shell of the instance.)
+
+![imds-eni](images/imdseni.png)
+
+We can also get the ENI ID through the EC2 console. Click on Instances and select the first instance we were pinging from. Once it is selected, choose the "Networking" tab at the bottom and copy the ENI ID under Network Interfaces.
+
+Note how it matches the output of our IMDSv2 command!
+
+![eni](images/eni.png)
+
+We will use the ENI ID in the next step.
+
+## Step 7: Diagnosing the connectivity issue
+
+In this step we will diagnose the connectivity issue between the two instances by checking the VPC Flow Log we created in the previous step.
+
+Navigate to CloudWatch in the AWS Management Console. Click on Log groups under Logs on the left, and then click on the vpc-flow-logs-project log group we created.
+
+![cw loggroup](images/cwloggroup.png)
+
+You should see log streams in the log group for each ENI sending traffic in this default VPC. (Keep in mind that in reality, for a company's production environment you could have thousands of log streams corresponding to every ENI sending traffic in that VPC.)
+
+Under the Log streams tab at the bottom, you can search for the ENI ID we copied in Step 6. 
+
+![eni logstream](images/enilogstream.png)
+
+Click on the log stream. 
