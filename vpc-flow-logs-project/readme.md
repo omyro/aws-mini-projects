@@ -181,15 +181,19 @@ Now return to the Session Manager console with the shell to our first instance. 
 
 Again, it should show 100% packet loss under the ping statistics.
 
-Next, we will obtain the ENI ID of the first instance with the following command: `TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
+Next, we will obtain the ENI ID of the first instance with the following command: 
+
+`TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
 && curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/network/interfaces/macs/"$(TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
-&& curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/mac)"/interface-id`. This uses the Instance Metadata Service (IMDSv2). Visit the following [Amazon EC2 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) for an explanation of IMDSv2 vs. IMDSv1.
+&& curl -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/mac)"/interface-id`
+
+This uses the Instance Metadata Service (IMDSv2). Visit the following [Amazon EC2 documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) for an explanation of IMDSv2 vs. IMDSv1.
 
 Most likely, your instance requires you to use IMDSv2 instead of IMDSv1. The place you can check that is in the EC2 console, under Instances. If you select the first instance and scroll down a bit under the "Details" tab, you will see "IMDSv2" and underneath it will say either Required or Optional. If Required, you must use IMDSv2, as I have in the example above. If it says Optional, you can use IMDSv1.
 
 ![imds-details](images/imdsdetails.png)
 
-(Please note, if you are following [Cantrill's original instructions](https://github.com/acantril/learn-cantrill-io-labs/tree/master/00-aws-simple-demos/aws-vpc-flow-logs) for this project, he uses IMDSv1 and it most likely won't work for you. I had to figure this out and put together the command above for you to easily get the ENI ID from the shell of the instance.)
+This is how it should look like when you run the command from the shell (I have highlighted the interface id - it starts with "eni"): 
 
 ![imds-eni](images/imdseni.png)
 
